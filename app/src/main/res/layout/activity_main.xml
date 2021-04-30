@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:background="#0D47A1"
         android:elevation="16dp"
+        android:theme="@style/BottomNavigationTheme"
         app:elevation="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

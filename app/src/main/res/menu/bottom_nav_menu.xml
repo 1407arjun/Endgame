@@ -3,10 +3,12 @@
 
     <item
         android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_text"
+        android:icon="@drawable/ic_text"
         android:title="@string/title_text" />
 
 </menu>
