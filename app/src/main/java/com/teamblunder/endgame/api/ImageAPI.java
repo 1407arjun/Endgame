@@ -11,7 +11,7 @@ import retrofit2.http.Query;
 public interface ImageAPI {
 
     String BASE_URL = "https://serpapi.com/";
-    @GET("search.json.?")
+    @GET("search.json?")
     Call<ImageJSONPlaceholder> getResult(@Query("q") String q, @Query("tbm") String tbm,
                                                     @Query("ijn") String ijn, @Query("api_key") String api_key);
 }

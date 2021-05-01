@@ -68,7 +68,7 @@ public class KeywordFragment extends Fragment {
         progress.setCancelable(false);
 
         getData(text);
-        getImageData();
+        //getImageData();
 
 
         return view;
@@ -79,42 +79,48 @@ public class KeywordFragment extends Fragment {
         try {
             String urlEncoder = URLEncoder.encode(inputText, "UTF-8");
             Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://your.api.url")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
             progress.show();
             KeywordAPI keyApi = retrofit.create(KeywordAPI.class);
-            Call<ArrayList<String>> call = keyApi.getResult("https://9480f5d2383b.ngrok.io/" + urlEncoder);
+            Call<ArrayList<String>> call = keyApi.getResult("https://415c63283cf7.ngrok.io/" + urlEncoder);
             call.enqueue(new Callback<ArrayList<String>>() {
                 @Override
                 public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
                     keywordsList = response.body();
+                    Log.i("searchxx", keywordsList.toString());
+
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<String>> call, Throwable t) {
                     Toast.makeText(getActivity(), "Couldn't fetch data", Toast.LENGTH_LONG).show();
+                    progress.dismiss();
                 }
             });
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+            progress.dismiss();
         }
     }
 
-    public void getImageData(){
+    /*public void getImageData(){
         imagesList.clear();
-        Retrofit retrofit = new Retrofit.Builder()
+        Retrofit retrofit2 = new Retrofit.Builder()
                 .baseUrl(ImageAPI.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         progress.show();
-        ImageAPI myApi = retrofit.create(ImageAPI.class);
+        ImageAPI myApi = retrofit2.create(ImageAPI.class);
         for (int i = 0; i < keywordsList.size(); i++){
             String name = keywordsList.get(i);
-            Call<ImageJSONPlaceholder> call = myApi.getResult(name, "isch", "0", "eba15b7a6b9ecd04083e7acc5a05eedcf8f727afd4d6de755e4f0b78ee6185a1");
-            call.enqueue(new Callback<ImageJSONPlaceholder>() {
+            Call<ImageJSONPlaceholder> call2 = myApi.getResult(name, "isch", "0", "eba15b7a6b9ecd04083e7acc5a05eedcf8f727afd4d6de755e4f0b78ee6185a1");
+            call2.enqueue(new Callback<ImageJSONPlaceholder>() {
                 @Override
-                public void onResponse(Call<ImageJSONPlaceholder> call, Response<ImageJSONPlaceholder> response) {
-                    ImageJSONPlaceholder searchResults = response.body();
+                public void onResponse(Call<ImageJSONPlaceholder> call2, Response<ImageJSONPlaceholder> response2) {
+                    ImageJSONPlaceholder searchResults = response2.body();
+                    Log.i("serachxex", "xxxx");
                     if (searchResults.getSuggestedSearches().get(0).getThumbnail() != null){
                         Map<String, String> entry = new HashMap<>();
                         entry.put("name", name);
@@ -124,12 +130,13 @@ public class KeywordFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<ImageJSONPlaceholder> call, Throwable t) {
+                public void onFailure(Call<ImageJSONPlaceholder> call2, Throwable t2) {
                     Toast.makeText(getActivity(), "Couldn't fetch data", Toast.LENGTH_LONG).show();
                 }
             });
         }
         progress.dismiss();
+        Log.i("imagexx", imagesList.toString());
 
         KeywordAdapter keywordAdapter = new KeywordAdapter(imagesList, getActivity());
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
@@ -138,7 +145,8 @@ public class KeywordFragment extends Fragment {
 
         Log.i("imagexx" , imagesList.toString());
 
-    }
+
+    }*/
 
     public class AnalyzeTextTask extends AsyncTask<String, Void, String> {
 
