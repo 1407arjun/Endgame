@@ -29,20 +29,21 @@ public class RaribleActivity extends AppCompatActivity {
                 "    <script src=\"https://unpkg.com/embeddable-nfts/dist/nft-card.min.js\"></script>", "text/html", "UTF-8");
 
         TextView timeTextView = findViewById(R.id.timeTextView);
-        new CountDownTimer(5200, 1000) {
+        new CountDownTimer(10200, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timeTextView.setText((int) millisUntilFinished / 1000 + "s");
-
+                timeTextView.setText(Integer.toString((int) millisUntilFinished/1000));
             }
 
             @Override
             public void onFinish() {
+                timeTextView.setText("0");
                 Intent intent = new Intent(RaribleActivity.this, MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
             }
-        };
+        }.start();
+
     }
 }
