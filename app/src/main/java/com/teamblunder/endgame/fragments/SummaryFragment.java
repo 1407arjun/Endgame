@@ -64,7 +64,7 @@ public class SummaryFragment extends Fragment {
             AnalyzeTextTask analyzeTextTask = new AnalyzeTextTask();
             try {
                 String urlEncoder = URLEncoder.encode(inputText, "UTF-8");
-                analyzeTextTask.execute("https://eac3a7a20431.ngrok.io/" + urlEncoder);
+                analyzeTextTask.execute("https://07739cba6249.ngrok.io/" + urlEncoder);
                 progress.show();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
