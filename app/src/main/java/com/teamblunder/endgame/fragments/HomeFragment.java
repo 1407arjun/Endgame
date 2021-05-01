@@ -47,7 +47,8 @@ import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
-    String currentPhotoPath, resultText;
+    String currentPhotoPath;
+    static String resultText;
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static final int STORAGE_PERMISSION_CODE = 101;
 
