@@ -5,12 +5,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.teamblunder.endgame.R;
+import com.teamblunder.endgame.models.SummaryAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,11 +34,13 @@ public class SummaryFragment extends Fragment {
     ProgressDialog progress;
     ArrayList<String> summaryList = new ArrayList<>();
     String result;
+    RecyclerView summaryRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_summary, container, false);
+        summaryRecyclerView = view.findViewById(R.id.summaryRecyclerView);
 
         Bundle args = getArguments();
         String text = args.getString("inputText");
@@ -100,6 +105,12 @@ public class SummaryFragment extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         summaryList.add((String) jsonArray.get(i));
                     }
+                    SummaryAdapter summaryAdapter = new SummaryAdapter(summaryList,getActivity());
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                    summaryRecyclerView.setLayoutManager(layoutManager);
+                    summaryRecyclerView.setAdapter(summaryAdapter);
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
