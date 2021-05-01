@@ -79,7 +79,7 @@ public class KeywordFragment extends Fragment {
         AnalyzeTextTask analyzeTextTask = new AnalyzeTextTask();
         try {
             String urlEncoder = URLEncoder.encode(inputText, "UTF-8");
-            analyzeTextTask.execute("https://de6c984099e4.ngrok.io/" + urlEncoder);
+            analyzeTextTask.execute("https://40a430dfd6bc.ngrok.io/" + urlEncoder);
             progress.show();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
