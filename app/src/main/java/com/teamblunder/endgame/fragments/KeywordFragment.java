@@ -55,8 +55,7 @@ public class KeywordFragment extends Fragment {
         RecyclerView keywordRecyclerView = view.findViewById(R.id.keywordRecyclerView);
 
         Bundle bundle = getArguments();
-        String text = bundle.getString("text");
-
+        String text = bundle.getString("inputText");
 
         progress = new ProgressDialog(getActivity());
         progress.setMessage("Retrieving data");
@@ -75,11 +74,11 @@ public class KeywordFragment extends Fragment {
         return view;
     }
 
-    public void getData(String inputIext){
-
+    public void getData(String inputText){
+        keywordsList.clear();
         AnalyzeTextTask analyzeTextTask = new AnalyzeTextTask();
         try {
-            String urlEncoder = URLEncoder.encode(inputIext, "UTF-8");
+            String urlEncoder = URLEncoder.encode(inputText, "UTF-8");
             analyzeTextTask.execute("https://de6c984099e4.ngrok.io/" + urlEncoder);
             progress.show();
         } catch (UnsupportedEncodingException e) {
@@ -88,6 +87,7 @@ public class KeywordFragment extends Fragment {
     }
 
     public void getImageData(){
+        imagesList.clear();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ImageAPI.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())

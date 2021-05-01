@@ -16,30 +16,20 @@ import java.util.ArrayList;
 
 public class ResultActivity extends AppCompatActivity {
 
-    ArrayList<String> resultList = new ArrayList<>();
-    static String result, text;
-    ProgressDialog progress;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
         Intent intent = getIntent();
-        text = intent.getStringExtra("text");
+        String text = intent.getStringExtra("text");
         if (!text.equals("")) {
-            resultList.clear();
+            SummaryFragment summaryFragment = new SummaryFragment();
             KeywordFragment keywordFragment = new KeywordFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString("text", text);
-            keywordFragment.setArguments(bundle);
-            //Do something with the text
-            if (!result.equals("")) {
-                SummaryFragment summaryFragment = new SummaryFragment();
-                Bundle args = new Bundle();
-                args.putString("summary", result);
-                summaryFragment.setArguments(args);
-            }
+            Bundle args = new Bundle();
+            args.putString("inputText", text);
+            summaryFragment.setArguments(args);
+            keywordFragment.setArguments(args);
         }
 
         TabLayout tabLayout= findViewById(R.id.tabLayout);
