@@ -2,6 +2,7 @@ package com.teamblunder.endgame.quiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,8 +22,10 @@ import org.json.JSONException;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class QuizActivity extends AppCompatActivity {
@@ -47,6 +50,9 @@ public class QuizActivity extends AppCompatActivity {
 
         answersAL = new ArrayList<>();
 
+        Intent intent = getIntent();
+        String text = intent.getStringExtra("text");
+
         questionTextView = findViewById(R.id.question);
         answerEditTextView = findViewById(R.id.answers);
         timerTextView = findViewById(R.id.timer);
@@ -60,8 +66,15 @@ public class QuizActivity extends AppCompatActivity {
             }
         });
 
-        Question question = new Question();
-        question.execute("https://71c63cac26d7.ngrok.io/my%20name%20is%20yash%20jasani.%20my%20sister's%20name%20is%20nysha.");
+
+        try {
+            String urlEncoder = URLEncoder.encode(text, "UTF-8");
+            Question question = new Question();
+            question.execute("https://71c63cac26d7.ngrok.io/" + urlEncoder);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

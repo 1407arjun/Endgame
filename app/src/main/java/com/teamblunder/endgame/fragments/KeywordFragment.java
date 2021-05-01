@@ -50,6 +50,7 @@ public class KeywordFragment extends Fragment {
     ArrayList<Map<String, String>> imagesList = new ArrayList<>();
     ProgressDialog progress;
     RecyclerView keywordRecyclerView;
+    KeywordAdapter keywordAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,6 +67,11 @@ public class KeywordFragment extends Fragment {
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progress.setIndeterminate(true);
         progress.setCancelable(false);
+
+        keywordAdapter = new KeywordAdapter(keywordsList, getActivity());
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
+        keywordRecyclerView.setLayoutManager(layoutManager);
+        keywordRecyclerView.setAdapter(keywordAdapter);
 
         getData(text);
         //getImageData();
@@ -90,7 +96,8 @@ public class KeywordFragment extends Fragment {
                 public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
                     keywordsList = response.body();
                     Log.i("searchxx", keywordsList.toString());
-
+                    keywordAdapter.notifyDataSetChanged();
+                    progress.dismiss();
                 }
 
                 @Override

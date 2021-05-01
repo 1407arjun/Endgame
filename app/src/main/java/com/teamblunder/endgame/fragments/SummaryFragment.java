@@ -1,6 +1,7 @@
 package com.teamblunder.endgame.fragments;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -12,8 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.teamblunder.endgame.R;
 import com.teamblunder.endgame.models.SummaryAdapter;
+import com.teamblunder.endgame.quiz.QuizActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +55,16 @@ public class SummaryFragment extends Fragment {
         progress.setIndeterminate(true);
         progress.setCancelable(false);
 
-        summarizeText(text);
+        //summarizeText(text);
+        FloatingActionButton fab = view.findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), QuizActivity.class);
+                intent.putExtra("text", text);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }
