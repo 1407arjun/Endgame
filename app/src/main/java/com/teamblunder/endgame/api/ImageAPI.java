@@ -12,6 +12,6 @@ public interface ImageAPI {
 
     String BASE_URL = "https://serpapi.com/";
     @GET("search.json")
-    Call<ArrayList<ImageJSONPlaceholder>> getResult(@Query("q") String q, @Query("tbm") String tbm,
+    Call<ImageJSONPlaceholder> getResult(@Query("q") String q, @Query("tbm") String tbm,
                                                     @Query("ijn") String ijn, @Query("api_key") String api_key);
 }
