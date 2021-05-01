@@ -27,7 +27,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.text.Text;
+import com.google.mlkit.vision.text.TextRecognition;
+import com.google.mlkit.vision.text.TextRecognizer;
 import com.teamblunder.endgame.R;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -42,7 +47,7 @@ import java.util.Map;
 
 public class HomeFragment extends Fragment {
 
-    String currentPhotoPath;
+    String currentPhotoPath, resultText;
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static final int STORAGE_PERMISSION_CODE = 101;
 
@@ -135,9 +140,27 @@ public class HomeFragment extends Fragment {
                 CropImage.ActivityResult cropResult = CropImage.getActivityResult(data);
                 Uri resultUri = cropResult.getUri();
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), resultUri);
+                if (bitmap != null) {
+                    InputImage image = InputImage.fromBitmap(bitmap, 0);
+                    TextRecognizer recognizer = TextRecognition.getClient();
+                    Task<Text> result = recognizer.process(image)
+                            .addOnSuccessListener(visionText -> processTextBlock(visionText))
+                            .addOnFailureListener(e -> Toast.makeText(getActivity(), "Failed", Toast.LENGTH_SHORT).show());
+                }
             }
+
         } catch (Exception error) {
             Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void processTextBlock(Text result) {
+        resultText = result.getText();
+
+        if (!resultText.equals("")) {
+            Navigation.findNavController(getView()).navigate(R.id.navigation_text);
+        } else {
+            Toast.makeText(getActivity(), "No text detected", Toast.LENGTH_SHORT).show();
         }
     }
 }
