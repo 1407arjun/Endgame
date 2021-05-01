@@ -42,8 +42,9 @@ public class SummaryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_summary, container, false);
         summaryRecyclerView = view.findViewById(R.id.summaryRecyclerView);
 
-        Bundle args = getArguments();
-        String text = args.getString("inputText");
+        //Bundle args = getArguments();
+        String text = "The Indian independence movement was a series of historic events with the ultimate aim of ending the British rule in India. The movement spanned from 1857 to 1947.[1] The first nationalistic revolutionary movement for Indian independence emerged from Bengal.[2] It later took root in the newly formed Indian National Congress with prominent moderate leaders seeking only their fundamental right to appear for Indian Civil Service examinations in British India, as well as more rights";
+                //args.getString("inputText");
 
         progress = new ProgressDialog(getActivity());
         progress.setMessage("Retrieving data");
@@ -63,7 +64,7 @@ public class SummaryFragment extends Fragment {
             AnalyzeTextTask analyzeTextTask = new AnalyzeTextTask();
             try {
                 String urlEncoder = URLEncoder.encode(inputText, "UTF-8");
-                analyzeTextTask.execute("https://40a430dfd6bc.ngrok.io/" + urlEncoder);
+                analyzeTextTask.execute("https://eac3a7a20431.ngrok.io/" + urlEncoder);
                 progress.show();
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();

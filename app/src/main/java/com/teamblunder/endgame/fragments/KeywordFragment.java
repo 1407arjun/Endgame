@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,15 +48,17 @@ public class KeywordFragment extends Fragment {
     ArrayList<String> keywordsList = new ArrayList<>();
     ArrayList<Map<String, String>> imagesList = new ArrayList<>();
     ProgressDialog progress;
+    RecyclerView keywordRecyclerView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_keyword, container, false);
-        RecyclerView keywordRecyclerView = view.findViewById(R.id.keywordRecyclerView);
+        keywordRecyclerView = view.findViewById(R.id.keywordRecyclerView);
 
-        Bundle bundle = getArguments();
-        String text = bundle.getString("inputText");
+        //Bundle bundle = getArguments();
+        String text = "The Indian independence movement was a series of historic events with the ultimate aim of ending the British rule in India. The movement spanned from 1857 to 1947.[1] The first nationalistic revolutionary movement for Indian independence emerged from Bengal.[2] It later took root in the newly formed Indian National Congress with prominent moderate leaders seeking only their fundamental right to appear for Indian Civil Service examinations in British India, as well as more rights";
+                //bundle.getString("inputText");
 
         progress = new ProgressDialog(getActivity());
         progress.setMessage("Retrieving data");
@@ -66,10 +69,6 @@ public class KeywordFragment extends Fragment {
         getData(text);
         getImageData();
 
-        KeywordAdapter keywordAdapter = new KeywordAdapter(imagesList, getActivity());
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
-        keywordRecyclerView.setLayoutManager(layoutManager);
-        keywordRecyclerView.setAdapter(keywordAdapter);
 
         return view;
     }
@@ -79,7 +78,7 @@ public class KeywordFragment extends Fragment {
         AnalyzeTextTask analyzeTextTask = new AnalyzeTextTask();
         try {
             String urlEncoder = URLEncoder.encode(inputText, "UTF-8");
-            analyzeTextTask.execute("https://40a430dfd6bc.ngrok.io/" + urlEncoder);
+            analyzeTextTask.execute("https://f3f51209d11b.ngrok.io/" + urlEncoder);
             progress.show();
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -116,6 +115,14 @@ public class KeywordFragment extends Fragment {
             });
         }
         progress.dismiss();
+
+        KeywordAdapter keywordAdapter = new KeywordAdapter(imagesList, getActivity());
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(),2);
+        keywordRecyclerView.setLayoutManager(layoutManager);
+        keywordRecyclerView.setAdapter(keywordAdapter);
+
+        Log.i("imagexx" , imagesList.toString());
+
     }
 
     public class AnalyzeTextTask extends AsyncTask<String, Void, String> {
@@ -152,6 +159,7 @@ public class KeywordFragment extends Fragment {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         keywordsList.add((String) jsonArray.get(i));
                     }
+                    Log.i("keywordxx", keywordsList.toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
