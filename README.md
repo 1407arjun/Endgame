@@ -26,7 +26,7 @@ The app, for now, runs on a cloud-based system i.e one has to be connected to th
 ## <img src="https://techstackapps.com/media/2019/11/TechStackApps-logo-icon.png" width="32" height="32"> Tech stack
 1. <img src="https://2.bp.blogspot.com/-tzm1twY_ENM/XlCRuI0ZkRI/AAAAAAAAOso/BmNOUANXWxwc5vwslNw3WpjrDlgs9PuwQCLcBGAsYHQ/s1600/pasted%2Bimage%2B0.png" width="32" height="32"> Android Studio
 2. <img src="https://developers.google.com/ml-kit/images/homepage/hero.png" width="40" height="32"> Google ML Kit
-3. <img src="https://opencv.org/wp-content/uploads/2020/07/OpenCV_logo_black_.png" width="32" height="32"> Open CV
+3. <img src="https://cdn.coinranking.com/nft/0x60F80121C31A0d46B5279700f9DF786054aa5eE5/58567.png?size=autox430" width="32" height="32"> Rarible
 4. <img src="https://buttercms.com/static/images/tech_banners/Flask.png" width="45" height="32"> Flask
 
 ## Note
