@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.teamblunder.endgame.R;
 import com.teamblunder.endgame.ResultActivity;
 import com.teamblunder.endgame.api.ImageAPI;
+import com.teamblunder.endgame.api.KeywordAPI;
 import com.teamblunder.endgame.models.ImageJSONPlaceholder;
 import com.teamblunder.endgame.models.KeywordAdapter;
 
@@ -75,11 +76,25 @@ public class KeywordFragment extends Fragment {
 
     public void getData(String inputText){
         keywordsList.clear();
-        AnalyzeTextTask analyzeTextTask = new AnalyzeTextTask();
         try {
             String urlEncoder = URLEncoder.encode(inputText, "UTF-8");
-            analyzeTextTask.execute("https://9480f5d2383b.ngrok.io/" + urlEncoder);
+            Retrofit retrofit = new Retrofit.Builder()
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
             progress.show();
+            KeywordAPI keyApi = retrofit.create(KeywordAPI.class);
+            Call<ArrayList<String>> call = keyApi.getResult("https://9480f5d2383b.ngrok.io/" + urlEncoder);
+            call.enqueue(new Callback<ArrayList<String>>() {
+                @Override
+                public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
+                    keywordsList = response.body();
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<String>> call, Throwable t) {
+                    Toast.makeText(getActivity(), "Couldn't fetch data", Toast.LENGTH_LONG).show();
+                }
+            });
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -93,23 +108,18 @@ public class KeywordFragment extends Fragment {
                 .build();
         progress.show();
         ImageAPI myApi = retrofit.create(ImageAPI.class);
-        Log.i("sizexx" , String.valueOf(keywordsList.size()));
         for (int i = 0; i < keywordsList.size(); i++){
             String name = keywordsList.get(i);
-            Log.i("namexx" , name);
             Call<ImageJSONPlaceholder> call = myApi.getResult(name, "isch", "0", "eba15b7a6b9ecd04083e7acc5a05eedcf8f727afd4d6de755e4f0b78ee6185a1");
             call.enqueue(new Callback<ImageJSONPlaceholder>() {
                 @Override
                 public void onResponse(Call<ImageJSONPlaceholder> call, Response<ImageJSONPlaceholder> response) {
                     ImageJSONPlaceholder searchResults = response.body();
-                    Log.i("searchxx" , searchResults.toString());
                     if (searchResults.getSuggestedSearches().get(0).getThumbnail() != null){
                         Map<String, String> entry = new HashMap<>();
                         entry.put("name", name);
                         entry.put("thumbnail", searchResults.getSuggestedSearches().get(0).getThumbnail());
                         imagesList.add(entry);
-
-                        Log.i("Thumbnailxx" , searchResults.getSuggestedSearches().get(0).getThumbnail());
                     }
                 }
 
