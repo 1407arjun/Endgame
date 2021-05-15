@@ -30,4 +30,4 @@ The app, for now, runs on a cloud-based system i.e one has to be connected to th
 4. <img src="https://buttercms.com/static/images/tech_banners/Flask.png" width="45" height="32"> Flask
 
 ## Note
-The repository may be committed several times in order update the URL of the model present in ChoiceActivity.java file, since it is hosted on a localhost server whose URL refreshes every two hours.
+The repository may be committed several times in order update the URL of the model present in various java files, since it is hosted on a localhost server whose URL refreshes every two hours.
